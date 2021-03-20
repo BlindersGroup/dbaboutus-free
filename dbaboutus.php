@@ -38,7 +38,7 @@ class Dbaboutus extends Module
         require_once(dirname(__FILE__).'/classes/DbAboutUsSpeciality.php');
         require_once(dirname(__FILE__).'/classes/DbAboutUsTag.php');
 
-        if(file_exists(dirname(__FILE__).'/premium/DbPremium_.php')){
+        if(file_exists(dirname(__FILE__).'/premium/DbPremium.php')){
             require_once(dirname(__FILE__).'/premium/DbPremium.php');
             $this->premium = 1;
         } else {
