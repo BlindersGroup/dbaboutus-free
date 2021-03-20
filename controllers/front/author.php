@@ -41,10 +41,11 @@ class DbAboutUsAuthorModuleFrontController extends ModuleFrontController
         $author = DbAboutUsAuthor::getAuthor($rewrite);
 
         // Redireccionamos a 404 si no encuentra el autor
-        if((int)$author['id_dbaboutus_author'] == 0){
+        if((int)$author['id_dbaboutus_author'] == 0 || $author['active'] == 0){
             Tools::redirect('index.php?controller=404');
         }
 
+        $specialities = DbAboutUsSpeciality::getSpecialitiesByAuthor($author['id_dbaboutus_author']);
         $tag = DbAboutUsTag::getTagByAuthor($author['id_dbaboutus_author']);
         $url_author = Context::getContext()->link->getModuleLink('dbaboutus', 'author', array('rewrite' => $rewrite));
         $title_about = Configuration::get('DBABOUTUS_TITLE', $id_lang);
@@ -55,10 +56,20 @@ class DbAboutUsAuthorModuleFrontController extends ModuleFrontController
         $media_opiniones = 0.0;
         $c_active = 0;
         $opiniones = [];
+        if($this->module->premium == 1) {
+            $datos_blog = DbPremium::connectBlog($author, $id_lang);
+            $posts = $datos_blog['posts'];
+            $posts_more_read = $datos_blog['posts_more_read'];
+            $total_opiniones = $datos_blog['total_opiniones'];
+            $media_opiniones = $datos_blog['media_opiniones'];
+            $c_active = $datos_blog['c_active'];
+            $opiniones = $datos_blog['opiniones'];
+        }
 
         $this->context->smarty->assign(array(
             'author'            => $author,
             'path_img'          => _MODULE_DIR_.'dbaboutus/views/img/author/',
+            'specialities'      => $specialities,
             'tag'               => $tag,
             'url_author'        => $url_author,
             'title_about'       => $title_about,
@@ -68,6 +79,7 @@ class DbAboutUsAuthorModuleFrontController extends ModuleFrontController
             'media_opiniones'   => $media_opiniones,
             'opiniones'         => $opiniones,
             'c_active'          => $c_active,
+            'premium'           => $this->module->premium,
         ));
 
         $this->setTemplate('module:dbaboutus/views/templates/front/author.tpl');

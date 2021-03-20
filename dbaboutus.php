@@ -38,6 +38,13 @@ class Dbaboutus extends Module
         require_once(dirname(__FILE__).'/classes/DbAboutUsSpeciality.php');
         require_once(dirname(__FILE__).'/classes/DbAboutUsTag.php');
 
+        if(file_exists(dirname(__FILE__).'/premium/DbPremium_.php')){
+            require_once(dirname(__FILE__).'/premium/DbPremium.php');
+            $this->premium = 1;
+        } else {
+            $this->premium = 0;
+        }
+
         $this->name = 'dbaboutus';
         $this->tab = 'front_office_features';
         $this->version = '1.2.0';
@@ -251,6 +258,10 @@ class Dbaboutus extends Module
      */
     protected function getConfigForm()
     {
+        if($this->premium == 1){
+            return DbPremium::getConfigFormGeneral();
+        }
+
         return array(
             'form' => array(
                 'legend' => array(
@@ -290,7 +301,7 @@ class Dbaboutus extends Module
                     array(
                         'type' => 'textarea',
                         'name' => 'DBABOUTUS_SHORT_DESC',
-                        'label' => $this->l('Descripción'),
+                        'label' => $this->l('Descripción corta'),
                         'autoload_rte' => true,
                         'rows' => 5,
                         'cols' => 40,
@@ -404,4 +415,5 @@ class Dbaboutus extends Module
 
         return $my_routes;
     }
+
 }

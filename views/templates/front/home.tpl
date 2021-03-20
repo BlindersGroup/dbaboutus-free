@@ -68,6 +68,9 @@
             </ul>
         </div>
         {/if}
+        <div class="large_description">
+            {$large_desc nofilter}
+        </div>
 
     </div>
 {/block}

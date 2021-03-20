@@ -303,25 +303,29 @@ class AdminDbAboutAuthorController extends ModuleAdminController
 
                 array(
                     'type' => 'switch',
-                    'label' => $this->trans('Active', array(), 'Admin.Global'),
+                    'label' => $this->l('Active'),
                     'name' => 'active',
                     'is_bool' => true,
                     'values' => array(
                         array(
                             'id' => 'active_on',
                             'value' => 1,
-                            'label' => $this->trans('Yes', array(), 'Admin.Global')
+                            'label' => $this->l('Yes')
                         ),
                         array(
                             'id' => 'active_off',
                             'value' => 0,
-                            'label' => $this->trans('No', array(), 'Admin.Global')
+                            'label' => $this->l('No')
                         )
                     ),
                 ),
                 
             ),
         );
+
+        if($this->module->premium == 1){
+            $this->fields_form = DbPremium::adminRenderFormAuthor($specialties, $tags, $image);
+        }
 
         $this->fields_form['submit'] = array(
             'title' => $this->trans('Save', array(), 'Admin.Actions'),
@@ -337,14 +341,11 @@ class AdminDbAboutAuthorController extends ModuleAdminController
             return;
         }
 
-        $specia = Tools::getValue('specialties');
-        if(!empty($specia)) {
-            $specialities = implode(",", $specia);
-            if (count($specialities) > 0 && !is_array($specialities)) {
-                $_POST['specialties'] = $specialities;
-            } else {
-                $_POST['specialties'] = '';
-            }
+        $specialities = implode(",", Tools::getValue('specialties'));
+        if(count($specialities) > 0 && !is_array($specialities)) {
+            $_POST['specialties'] = $specialities;
+        } else {
+            $_POST['specialties'] = '';
         }
         $author = parent::processAdd();
 
@@ -363,14 +364,11 @@ class AdminDbAboutAuthorController extends ModuleAdminController
             return;
         }
 
-        $specia = Tools::getValue('specialties');
-        if(!empty($specia)) {
-            $specialities = implode(",", $specia);
-            if (count($specialities) > 0 && !is_array($specialities)) {
-                $_POST['specialties'] = $specialities;
-            } else {
-                $_POST['specialties'] = '';
-            }
+        $specialities = implode(",", Tools::getValue('specialties'));
+        if(count($specialities) > 0 && !is_array($specialities)) {
+            $_POST['specialties'] = $specialities;
+        } else {
+            $_POST['specialties'] = '';
         }
         $object = parent::processUpdate();
 
