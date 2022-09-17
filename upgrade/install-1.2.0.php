@@ -45,13 +45,6 @@ function upgrade_module_1_2_0($module)
         ADD `id_shop` INT(10) UNSIGNED NOT NULL DEFAULT('.$id_shop.')
         AFTER `id_lang`;
     ');
-    /*$return &= Db::getInstance()->execute('
-            CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'dbaboutus_author_shop` (
-            `id_dbaboutus_author` INT(11) UNSIGNED NOT NULL,
-            `id_shop` INT(11) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id_dbaboutus_author`, `id_shop`)
-        ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8 ;'
-    );*/
 
     // Multishop speciality
     $return &= Db::getInstance()->execute(
@@ -59,13 +52,6 @@ function upgrade_module_1_2_0($module)
         ADD `id_shop` INT(11) UNSIGNED NOT NULL DEFAULT('.$id_shop.')
         AFTER `id_lang`;
     ');
-    /*$return &= Db::getInstance()->execute('
-            CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'dbaboutus_speciality_shop` (
-            `id_dbaboutus_speciality` INT(11) UNSIGNED NOT NULL,
-            `id_shop` INT(11) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id_dbaboutus_speciality`, `id_shop`)
-        ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8 ;'
-    );*/
 
     // Multishop tag
     $return &= Db::getInstance()->execute(
@@ -73,13 +59,6 @@ function upgrade_module_1_2_0($module)
         ADD `id_shop` INT(11) UNSIGNED NOT NULL DEFAULT('.$id_shop.')
         AFTER `id_lang`;
     ');
-    /*$return &= Db::getInstance()->execute('
-            CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'dbaboutus_tag_shop` (
-            `id_dbaboutus_tag` INT(11) UNSIGNED NOT NULL,
-            `id_shop` INT(11) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id_dbaboutus_tag`, `id_shop`)
-        ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8 ;'
-    );*/
 
     return $return;
 }

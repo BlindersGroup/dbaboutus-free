@@ -47,7 +47,7 @@ class Dbaboutus extends Module
 
         $this->name = 'dbaboutus';
         $this->tab = 'front_office_features';
-        $this->version = '1.2.0';
+        $this->version = '1.3.0';
         $this->author = 'DevBlinders';
         $this->need_instance = 0;
 
@@ -78,8 +78,8 @@ class Dbaboutus extends Module
         include(dirname(__FILE__).'/sql/install.php');
 
         return parent::install() &&
-            $this->registerHook('header') &&
-            $this->registerHook('backOfficeHeader') &&
+            $this->registerHook('displayHeader') &&
+            $this->registerHook('displayBackOfficeHeader') &&
             $this->registerHook('moduleRoutes');
     }
 
@@ -222,7 +222,12 @@ class Dbaboutus extends Module
             $this->postProcess();
         }
 
-        return $this->renderForm();
+        $this->context->smarty->assign('name_module', $this->name);
+        $this->context->smarty->assign('premium', $this->premium);
+        $iframe_top = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/iframe.tpl');
+        $iframe_bottom = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/iframe_bottom.tpl');
+
+        return $iframe_top . $this->renderForm() . $iframe_bottom;
     }
 
     /**
@@ -277,14 +282,14 @@ class Dbaboutus extends Module
                         'lang'  => true,
                     ),
                     array(
-                        'col' => 9,
+                        'col' => 8,
                         'type' => 'text',
                         'name' => 'DBABOUTUS_METATITLE',
                         'label' => $this->l('Meta-título'),
                         'lang'  => true,
                     ),
                     array(
-                        'col' => 9,
+                        'col' => 8,
                         'type' => 'text',
                         'name' => 'DBABOUTUS_METADESC',
                         'label' => $this->l('Meta descripción'),
@@ -302,6 +307,15 @@ class Dbaboutus extends Module
                         'type' => 'textarea',
                         'name' => 'DBABOUTUS_SHORT_DESC',
                         'label' => $this->l('Descripción corta'),
+                        'autoload_rte' => true,
+                        'rows' => 5,
+                        'cols' => 40,
+                        'lang'  => true,
+                    ),
+                    array(
+                        'type' => 'textarea',
+                        'name' => 'DBABOUTUS_LARGE_DESC',
+                        'label' => $this->l('Descripción larga'),
                         'autoload_rte' => true,
                         'rows' => 5,
                         'cols' => 40,
@@ -360,20 +374,20 @@ class Dbaboutus extends Module
     /**
     * Add the CSS & JavaScript files you want to be loaded in the BO.
     */
-    public function hookBackOfficeHeader()
+    public function hookDisplayBackOfficeHeader()
     {
-        if (Tools::getValue('module_name') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
+        if (Tools::getValue('module_name') == $this->name || Tools::getValue('configure') == $this->name) {
+            $this->context->controller->addJquery();
+            $this->context->controller->addJS($this->_path . '/views/js/back.js');
+            $this->context->controller->addCSS($this->_path . '/views/css/back.css');
         }
     }
 
     /**
      * Add the CSS & JavaScript files you want to be added on the FO.
      */
-    public function hookHeader()
+    public function hookDisplayHeader()
     {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
         $this->context->controller->addCSS($this->_path.'/views/css/dbaboutus.css');
     }
 

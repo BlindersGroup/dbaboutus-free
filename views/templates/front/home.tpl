@@ -43,34 +43,38 @@
     </script>
 {/block}
 
-{include file='module:dbaboutus/views/templates/front/_partials/breadcrumb.tpl'}
-
 {block name="content_wrapper"}
-    <div id="content-wrapper" class="center-column authors row">
-        <h1>{$title|escape:'htmlall':'UTF-8'}</h1>
-        <div class="short_description">
-            {$short_desc nofilter}
-        </div>
-        {if $authors|count > 0}
-        <div class="group_authors">
-            <p class="title">Equipo</p>
-            <ul class="team_authors">
-                {foreach from=$authors item=author}
-                    <li>
-                        <a href="{DbAboutUsAuthor::getLink($author.link_rewrite|escape:'htmlall':'UTF-8')}" class="link_author">
-                            <img src="{$path_img|escape:'htmlall':'UTF-8'}{$author.id_dbaboutus_author|escape:'htmlall':'UTF-8'}.jpg" alt="{$author.name|escape:'htmlall':'UTF-8'}">
-                            <span class="name">{$author.name|escape:'htmlall':'UTF-8'}</span>
-                            <span class="work">{$author.profession|escape:'htmlall':'UTF-8'}</span>
-                            <span class="link">{l s='Ver más' mod='dbaboutus'} <span class="material-icons">keyboard_arrow_right</span></span>
-                        </a>
-                    </li>
-                {/foreach}
-            </ul>
-        </div>
-        {/if}
-        <div class="large_description">
-            {$large_desc nofilter}
-        </div>
+    <div id="content-wrapper" class="content-only">
+        <div class="authors">
+            <h1 class="h2 title">{$title|escape:'htmlall':'UTF-8'}</h1>
+            <div class="short_description">
+                {$short_desc nofilter}
+            </div>
+            {if $authors|count > 0}
+            <div class="group_authors">
+                <ul class="team_authors">
+                    {foreach from=$authors item=author}
+                        <li>
+                            <a href="{DbAboutUsAuthor::getLink($author.link_rewrite|escape:'htmlall':'UTF-8')}" class="link_author">
+                                <img src="{$path_img|escape:'htmlall':'UTF-8'}{$author.id_dbaboutus_author|escape:'htmlall':'UTF-8'}.jpg" alt="{$author.name|escape:'htmlall':'UTF-8'}">
+                                <div class="text_author">
+                                    <span class="name">{$author.name|escape:'htmlall':'UTF-8'}</span>
+                                    <span class="work">{$author.profession|escape:'htmlall':'UTF-8'}</span>
+                                    <span class="btn btn-secondary">
+                                        {l s='Ver más' mod='dbaboutus'}
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
+            {/if}
+            <div class="large_description">
+                {$large_desc nofilter}
+            </div>
 
+        </div>
     </div>
 {/block}
