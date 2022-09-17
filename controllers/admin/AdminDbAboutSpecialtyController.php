@@ -33,7 +33,7 @@ class AdminDbAboutSpecialtyController extends ModuleAdminController
         $this->table = 'dbaboutus_speciality';
         $this->className = 'DbAboutUsSpeciality';
         $this->lang = true;
-        $this->multishop_context = Shop::CONTEXT_ALL;
+        //$this->multishop_context = Shop::CONTEXT_ALL;
 
         parent::__construct();
 

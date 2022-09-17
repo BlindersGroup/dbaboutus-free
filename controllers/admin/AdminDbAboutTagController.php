@@ -33,7 +33,7 @@ class AdminDbAboutTagController extends ModuleAdminController
         $this->table = 'dbaboutus_tag';
         $this->className = 'DbAboutUsTag';
         $this->lang = true;
-        $this->multishop_context = Shop::CONTEXT_ALL;
+        //$this->multishop_context = Shop::CONTEXT_ALL;
 
         parent::__construct();
 

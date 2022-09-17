@@ -36,7 +36,7 @@ class AdminDbAboutAuthorController extends ModuleAdminController
         $this->table = 'dbaboutus_author';
         $this->className = 'DbAboutUsAuthor';
         $this->lang = true;
-        $this->multishop_context = Shop::CONTEXT_ALL;
+        // $this->multishop_context = Shop::CONTEXT_ALL;
         $this->position_identifier = 'position';
         $this->_orderWay = $this->_defaultOrderWay;
 
